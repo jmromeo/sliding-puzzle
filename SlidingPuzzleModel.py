@@ -22,21 +22,21 @@ class SlidingPuzzleModel:
 
 
   def __init__(self, size):
-    """ 
+  """ 
 
-      Function: __init__
-      ------------------
-      
-      Initializes our board state array and randomly generates a sliding 
-      puzzle Problem.
-     
+    Function: __init__
+    ------------------
+    
+    Initializes our board state array and randomly generates a sliding 
+    puzzle Problem.
+   
 
-      size: array with the following format: [# of rows, # of columns]. 
+    size: array with the following format: [# of rows, # of columns]. 
 
 
-      returns: nothing
+    returns: nothing
 
-    """
+  """
     # create an empty 2D array to hold the board_state
 
     num_rows = size[0];
@@ -53,51 +53,51 @@ class SlidingPuzzleModel:
 
         
   def moveNumber(self, position):
-    """
+  """
 
-      Function: moveNumber
-      --------------------
+    Function: moveNumber
+    --------------------
 
-      Checks whether the requested number can move and updates the 
-      board state appropriately.
-
-
-      position: an array containing the position of the number 
-                requested to move with the following format, [row, col].
+    Checks whether the requested number can move and updates the 
+    board state appropriately.
 
 
-      returns: nothing
+    position: an array containing the position of the number 
+              requested to move with the following format, [row, col].
 
-    """
+
+    returns: nothing
+
+  """
 
   def getBoardState(self):
-    """
+  """
 
-      Function: getBoardState
-      -----------------------
+    Function: getBoardState
+    -----------------------
 
-      Returns the current state of the board, in the form of a 2D array.
+    Returns the current state of the board, in the form of a 2D array.
 
 
-      returns: 2D array holding board state.
+    returns: 2D array holding board state.
 
-    """
+  """
 
   def generateBoard(self, num_rows, num_cols):
-    """
+  """
 
-      Function: generateBoard
-      -----------------------
+    Function: generateBoard
+    -----------------------
 
-      Creates a new board, and updates the board state with the new board.
+    Creates a new board, and updates the board state with the new board.
 
 
-      size: array with the following format [# of rows, # of columns].
+    size: array with the following format [# of rows, # of columns].
 
-      
-      returns: nothing 
+    
+    returns: nothing 
 
-    """
+  """
     # Generating a list of unique random numbers from 1->size 
 
     num_blocks = num_rows * num_cols; 

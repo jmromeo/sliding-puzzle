@@ -27,7 +27,7 @@ class SlidingPuzzleController:
 
 
     view: instance of SlidingPuzzleView
-    model: instnace of SlidingPuzzleModel
+    model: instance of SlidingPuzzleModel
 
 
     returns: nothing
@@ -43,7 +43,7 @@ class SlidingPuzzleController:
     moveRequest is to be registered as a callback function from the
     view. moveRequest takes the row position and column position of
     the requested move and sends it to the Model to update the board
-    appropriately.
+    state appropriately and then updates the board state in the View.
 
 
     position: an array containing the position of the number
