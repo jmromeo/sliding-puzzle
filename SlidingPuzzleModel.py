@@ -20,20 +20,36 @@ class SlidingPuzzleModel:
 
   """
 
+
   def __init__(self, size):
-  """ 
+    """ 
 
-    Function: __init__
-    ------------------
-    
-    Initializes our board state array and randomly generates a sliding 
-    puzzle Problem.
-   
+      Function: __init__
+      ------------------
+      
+      Initializes our board state array and randomly generates a sliding 
+      puzzle Problem.
+     
 
-    size: array with the following format: [# of rows, # of columns]. 
+      size: array with the following format: [# of rows, # of columns]. 
 
 
-    returns: nothing
+      returns: nothing
+
+    """
+    # create an empty 2D array to hold the board_state
+
+    num_rows = size[0];
+    num_cols = size[1];
+
+    self.board_state = [];
+
+    for row in range(num_rows):
+      self.board_state.append([]);
+      for column in range(num_cols):
+        self.board_state[row].append(0);
+
+    self.generateBoard(num_rows, num_cols);
 
   """
         
