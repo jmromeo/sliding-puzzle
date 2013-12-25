@@ -1,3 +1,8 @@
+""" importing required libraries """
+from random import sample # function to create pseudo random list 
+
+DEBUG = 1;
+
 class SlidingPuzzleModel:
   """ 
 
@@ -63,19 +68,40 @@ class SlidingPuzzleModel:
 
   """
 
-  def generateBoard():
-  """
+  def generateBoard(self, num_rows, num_cols):
+    """
 
-    Function: generateBoard
-    -----------------------
+      Function: generateBoard
+      -----------------------
 
-    Creates a new board, and updates the board state with the new board
+      Creates a new board, and updates the board state with the new board.
 
 
-    returns: 2D array holding board state 
+      size: array with the following format [# of rows, # of columns].
 
-  """
+      
+      returns: nothing 
 
+    """
+    # Generating a list of unique random numbers from 1->size 
+
+    num_blocks = num_rows * num_cols; 
+
+    randlist = sample(range(num_blocks), num_blocks); 
+
+
+    # organizing list in a 2D array that matches the layout of the board 
+    # algorithm for index is row = index / (num_rows), and 
+    # col = index % (num_cols).  This will map the 1 dimensional list
+    # to the 2D array in order from left to right, top to bottom
+
+    for index in range(num_blocks):
+      row                        = index / (num_rows);
+      col                        = index % (num_cols);
+      self.board_state[row][col] = randlist[index];
+    
+    if DEBUG:
+      print self.board_state;  
 
 
 
