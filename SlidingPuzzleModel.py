@@ -51,38 +51,37 @@ class SlidingPuzzleModel:
 
     self.generateBoard(num_rows, num_cols);
 
-  """
         
-  def moveNumber(position):
-  """
+  def moveNumber(self, position):
+    """
 
-    Function: moveNumber
-    --------------------
+      Function: moveNumber
+      --------------------
 
-    Checks whether the requested number can move and updates the 
-    cell array appropriately.
-
-
-    position: an array containing the position of the number 
-              requested to move with the following format, [row, col].
+      Checks whether the requested number can move and updates the 
+      board state appropriately.
 
 
-    returns: nothing
-
-  """
-
-  def getBoardState():
-  """
-
-    Function: getBoardState
-    -----------------------
-
-    Returns the current state of the board, in the form of a 2D array
+      position: an array containing the position of the number 
+                requested to move with the following format, [row, col].
 
 
-    returns: 2D array holding board state
+      returns: nothing
 
-  """
+    """
+
+  def getBoardState(self):
+    """
+
+      Function: getBoardState
+      -----------------------
+
+      Returns the current state of the board, in the form of a 2D array.
+
+
+      returns: 2D array holding board state.
+
+    """
 
   def generateBoard(self, num_rows, num_cols):
     """
