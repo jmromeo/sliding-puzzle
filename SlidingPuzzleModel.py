@@ -1,7 +1,7 @@
 """ importing required libraries """
 from random import sample # function to create pseudo random list 
 
-DEBUG = 0;
+DEBUG = False;
 
 class SlidingPuzzleModel:
   """ 
@@ -117,7 +117,7 @@ class SlidingPuzzleModel:
       col                        = index % (num_cols);
       self.board_state[row][col] = randlist[index];
     
-    if DEBUG:
+    if DEBUG == True:
       print self.board_state;  
 
 
