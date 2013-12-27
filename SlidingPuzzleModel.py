@@ -1,7 +1,7 @@
 """ importing required libraries """
 from random import sample # function to create pseudo random list 
 
-DEBUG = 1;
+DEBUG = 0;
 
 class SlidingPuzzleModel:
   """ 
@@ -27,7 +27,7 @@ class SlidingPuzzleModel:
       Function: __init__
       ------------------
       
-      Initializes our board state array and randomly generates a sliding 
+      Initializes board state array and randomly generates a sliding 
       puzzle Problem.
      
 
@@ -70,6 +70,7 @@ class SlidingPuzzleModel:
 
     """
 
+
   def getBoardState(self):
     """
 
@@ -82,6 +83,8 @@ class SlidingPuzzleModel:
       returns: 2D array holding board state.
 
     """
+    return self.board_state;
+
 
   def generateBoard(self, num_rows, num_cols):
     """
@@ -101,8 +104,7 @@ class SlidingPuzzleModel:
     # Generating a list of unique random numbers from 1->size 
 
     num_blocks = num_rows * num_cols; 
-
-    randlist = sample(range(num_blocks), num_blocks); 
+    randlist   = sample(range(num_blocks), num_blocks); 
 
 
     # organizing list in a 2D array that matches the layout of the board 
