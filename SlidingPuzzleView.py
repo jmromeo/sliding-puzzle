@@ -13,6 +13,7 @@ BACKGROUND_COLOR = BLACK;
 BOARD_COLOR      = WHITE;
 FONT_SIZE        = 40;
 RESOLUTION       = [1280, 960];
+CELL_MARGIN      = 5;
 
 class SlidingPuzzleView:
   """
@@ -27,8 +28,18 @@ class SlidingPuzzleView:
     
     Attributes:
       screen: pygame screen object that can be drawn on 
-      board:  2D array containing rectangles that cover each cell of the
-              game board. 
+      
+      board: 2D array containing rectangles that cover each cell 
+             of the game board. 
+
+      board_width:  width of the entire board.
+      board_height: height of the entire board.
+
+      cell_width:  width of each cell of the game board.
+      cell_height: height of each cell of the game board.
+
+      num_rows: number of rows on the board.
+      num_cols: number of columns on the board.
 
   """
 
@@ -85,11 +96,12 @@ class SlidingPuzzleView:
     self.board = [];
 
     board_size = [RESOLUTION[1] * .7, RESOLUTION[1] * .7];
-    margin     = 5;
 
-    cell_width  = (board_size[0] / num_cols) - (2 * margin);
-    cell_height = (board_size[1] / num_rows) - (2 * margin);
+    self.cell_width  = (board_size[0] / num_cols) - (2 * CELL_MARGIN);
+    self.cell_height = (board_size[1] / num_rows) - (2 * CELL_MARGIN);
 
+    self.board_width  = board_size[0];
+    self.board_height = board_size[1];
 
     # creating 2D array (board). board contains rectangle objects
     # that cover each cell of our game board. for instance, board[0][1] 
@@ -99,9 +111,11 @@ class SlidingPuzzleView:
     for row in range(num_rows):
       self.board.append([]);
       for col in range(num_cols):
-        col_pos  = (margin + cell_width)  * col + margin;
-        row_pos  = (margin + cell_height) * row + margin;
-        rect     = pygame.Rect(col_pos, row_pos, cell_width, cell_height); 
+        col_pos  = (CELL_MARGIN + self.cell_width)  * col + CELL_MARGIN;
+        row_pos  = (CELL_MARGIN + self.cell_height) * row + CELL_MARGIN;
+
+        rect     = pygame.Rect(col_pos, row_pos, 
+                               self.cell_width, self.cell_height); 
 
         self.screen.fill(BOARD_COLOR, rect);
         
@@ -144,4 +158,40 @@ class SlidingPuzzleView:
 
 
     pygame.display.flip();
+
+
+  def getIndices(self, x_pos, y_pos):
+    """
+
+      Function: getIndices
+      ---------------------
+
+      Returns the row and column indices of the cell that lies at the
+      cartesian coordinates [x_pos, y_pos]. Returns [-1, -1] if
+      coordinates are not within the bounds of the board.
+
+      
+      x_pos: x coordinates of user click.
+      y_pos: y coordinates of user click.
+      
+
+      returns: row and column indices on success, and [-1, -1] on
+               failure. 
+
+    """
+    row = (x_pos - CELL_MARGIN) / (CELL_MARGIN + self.cell_height);  
+    col = (y_pos - CELL_MARGIN) / (CELL_MARGIN + self.cell_width);
+
+    if row > self.num_rows or col > self.num_cols:
+      index = [-1, -1];
+
+    else:
+      index = [int(row), int(col)];
+
+    return index; 
+
+
+
+
+
 

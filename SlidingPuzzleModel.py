@@ -1,7 +1,7 @@
 """ importing required libraries """
 from random import sample # function to create pseudo random list 
 
-DEBUG = True;
+DEBUG = False;
 
 class SlidingPuzzleModel:
   """ 
@@ -74,6 +74,22 @@ class SlidingPuzzleModel:
       returns: nothing
 
     """
+    row = position[0];
+    col = position[1];
+
+    neighbors = self.neighbors[row][col];
+
+    for neighbor_pos in neighbors:
+      xpos         = neighbor_pos[0];
+      ypos         = neighbor_pos[1];
+      neighbor_num = self.board_state[xpos][ypos];
+      
+      if neighbor_num == 0:
+        my_num = self.board_state[row][col];
+
+        self.board_state[row][col]   = 0; 
+        self.board_state[xpos][ypos] = my_num;
+        break;
 
 
   def getBoardState(self):
@@ -165,8 +181,10 @@ class SlidingPuzzleModel:
         self.neighbors[row].append(neighbors);
     
     if DEBUG == True:
-      print self.neighbors;
-
+      for row in range(num_rows):
+        for col in range(num_cols):
+          neighbors = self.neighbors[row][col]
+          print self.neighbors[row][col];
 
 
 

@@ -18,7 +18,7 @@ class SlidingPuzzleController:
 
     
     Attributes:
-      none
+      None
 
   """
 
@@ -46,16 +46,51 @@ class SlidingPuzzleController:
     if DEBUG == True:
       print board_state;
 
-    self.__run();
+    self.__run(view, model);
 
 
-  def __run(self):
+  def __run(self, view, model):
+    """
+
+      Function: __run
+      ---------------
+
+      Begins listening for user input. If the user clicks on a square,
+      the Controller asks the View for the row and column indices of the
+      board given the pixel coordinates of where the user clicked. If
+      the user clicked on a square on the board, the Controller
+      will ask the Model to determine whether the attempted move is a
+      valid move or not, and will update the state of the board
+      appropriately. The Controller then asks the View to display the
+      new board state to the user.
+
+
+      view:  instance of SlidingPuzzleView
+      model: instance of SlidingPuzzleModel
+
+
+      returns: nothing
+
+    """
     done = False;
 
     while done == False:
       for event in pygame.event.get():
         if event.type == pygame.QUIT:
           done = True;
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+          pos    = pygame.mouse.get_pos();
+          col_pos = pos[0];
+          row_pos = pos[1];
+
+          index = view.getIndices(row_pos, col_pos);
+          
+          if index[0] != -1: 
+            model.moveNumber(index);
+            board_state = model.getBoardState();
+
+            view.updateBoard(board_state);
 
     pygame.quit();
 

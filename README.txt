@@ -7,3 +7,5 @@ After that, we will attempt to create the game with the Game Model.
 
 NOTE: pygame.init must be called before SlidingPuzzle libraries can be
       used!
+
+To play game, type "python main.py". 

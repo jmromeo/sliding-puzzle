@@ -9,6 +9,3 @@ model       = SlidingPuzzleModel([4,4]);
 view        = SlidingPuzzleView([4,4]);
 controller  = SlidingPuzzleController(view, model);
 
-
-while True:
-  """ """
