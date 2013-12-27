@@ -34,22 +34,3 @@ class SlidingPuzzleController:
 
   """
   
-  def moveRequest(position):
-  """
-    
-    Function: moveRequest
-    ---------------------
-
-    moveRequest is to be registered as a callback function from the
-    view. moveRequest takes the row position and column position of
-    the requested move and sends it to the Model to update the board
-    state appropriately and then updates the board state in the View.
-
-
-    position: an array containing the position of the number
-              requested to move with the following format, [row, col].
-
-
-    returns: nothing
-
-  """
