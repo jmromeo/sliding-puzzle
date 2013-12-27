@@ -1,3 +1,4 @@
+import pygame;
 from SlidingPuzzleModel import SlidingPuzzleModel
 from SlidingPuzzleView import SlidingPuzzleView
 
@@ -44,4 +45,20 @@ class SlidingPuzzleController:
 
     if DEBUG == True:
       print board_state;
+
+    self.__run();
+
+
+  def __run(self):
+    done = False;
+
+    while done == False:
+      for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+          done = True;
+
+    pygame.quit();
+
+
+
 
