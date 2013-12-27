@@ -1,7 +1,7 @@
 """ importing required libraries """
 from random import sample # function to create pseudo random list 
 
-DEBUG = False;
+DEBUG = True;
 
 class SlidingPuzzleModel:
   """ 
@@ -17,6 +17,9 @@ class SlidingPuzzleModel:
 
     Attributes:
       board_state: a 2 dimensional array holding the state of the board.
+      neighbors:   a 2 dimensional array of lists that hold the [row, col]
+                   coordinates of each of the neighboring cells 
+                   
 
   """
 
@@ -28,7 +31,8 @@ class SlidingPuzzleModel:
       ------------------
       
       Initializes board state array and randomly generates a sliding 
-      puzzle Problem.
+      puzzle Problem. Also sets up neighbors array that keeps track of
+      who each cell of the boards neighboring cells are. 
      
 
       size: array with the following format: [# of rows, # of columns]. 
@@ -50,6 +54,7 @@ class SlidingPuzzleModel:
         self.board_state[row].append(0);
 
     self.generateBoard(num_rows, num_cols);
+    self.__generateNeighbors(num_rows, num_cols);
 
         
   def moveNumber(self, position):
@@ -119,6 +124,49 @@ class SlidingPuzzleModel:
     
     if DEBUG == True:
       print self.board_state;  
+
+
+  def __generateNeighbors(self, num_rows, num_cols):
+    """
+
+      Function: generateBoard
+      -----------------------
+
+      Updates the neighbor member variable to hold a list of the
+      neighboring cells for each cell on the board.
+
+
+      num_rows: number of rows on the board
+      num_cols: number of columns on the board 
+
+      
+      returns: nothing 
+
+    """
+    self.neighbors = [];
+
+    for row in range(num_rows):
+      self.neighbors.append([]);
+      for col in range(num_cols):
+        neighbors = [];
+        
+        if (row - 1) >= 0:
+          neighbors.append([row - 1, col]);
+
+        if (row + 1) < num_rows:
+          neighbors.append([row + 1, col]);
+
+        if (col - 1) >= 0:
+          neighbors.append([row, col - 1]);
+
+        if (col + 1) < num_cols:
+          neighbors.append([row, col + 1]);
+
+        self.neighbors[row].append(neighbors);
+    
+    if DEBUG == True:
+      print self.neighbors;
+
 
 
 
