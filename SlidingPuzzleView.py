@@ -101,17 +101,3 @@ class SlidingPuzzleView:
 
     """
 
-  def run():
-    """ 
-
-      Function: run
-      -------------
-
-      Starts capturing user input and triggers event handler when user
-      attempts to move a piece.
-
-
-      returns: nothing
-
-    """
-
