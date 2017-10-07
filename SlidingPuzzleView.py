@@ -13,24 +13,25 @@ BACKGROUND_COLOR = BLACK;
 BOARD_COLOR      = WHITE;
 FONT_SIZE        = 40;
 RESOLUTION       = [1280, 960];
+BOARD_RATIO      = [1.0, 1.0];
 CELL_MARGIN      = 5;
 
 class SlidingPuzzleView:
   """
 
-    Updates GUI based on board_state. 
+    Updates GUI based on board_state.
 
 
     SlidingPuzzleView is the View part of the MVC pattern for our
     Sliding Puzzle Game. The view is in charge of creating the board
-    and displaying the board_state to the user. 
+    and displaying the board_state to the user.
 
-    
+
     Attributes:
-      screen: pygame screen object that can be drawn on 
-      
-      board: 2D array containing rectangles that cover each cell 
-             of the game board. 
+      screen: pygame screen object that can be drawn on
+
+      board: 2D array containing rectangles that cover each cell
+             of the game board.
 
       board_width:  width of the entire board.
       board_height: height of the entire board.
@@ -45,11 +46,11 @@ class SlidingPuzzleView:
 
 
   def __init__(self, size):
-    """ 
+    """
 
       Function: __init__
       ------------------
-      
+
       Creates and displays an empty board.
 
 
@@ -58,7 +59,7 @@ class SlidingPuzzleView:
       our game board.
 
 
-      size: array with the following format: [# of rows, # of columns] 
+      size: array with the following format: [# of rows, # of columns]
 
 
       returns: nothing
@@ -67,19 +68,23 @@ class SlidingPuzzleView:
     self.num_rows = size[0];
     self.num_cols = size[1];
 
-    self.screen = pygame.display.set_mode(RESOLUTION);
+    width, height = pygame.display.Info().current_w, pygame.display.Info().current_h
+    RESOLUTION[0] = width;
+    RESOLUTION[1] = height;
+
+    self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN);
     self.screen.fill(BACKGROUND_COLOR);
 
     self.__createBoard(self.num_rows, self.num_cols);
 
 
   def __createBoard(self, num_rows, num_cols):
-    """ 
+    """
 
       Function: __createBoard
       ------------------
-      
-      Creates and displays an empty board. 
+
+      Creates and displays an empty board.
 
 
       num_rows: number of rows on board
@@ -95,7 +100,7 @@ class SlidingPuzzleView:
 
     self.board = [];
 
-    board_size = [RESOLUTION[1] * .7, RESOLUTION[1] * .7];
+    board_size = [RESOLUTION[0] * BOARD_RATIO[0], RESOLUTION[1] * BOARD_RATIO[1]];
 
     self.cell_width  = (board_size[0] / num_cols) - (2 * CELL_MARGIN);
     self.cell_height = (board_size[1] / num_rows) - (2 * CELL_MARGIN);
@@ -104,7 +109,7 @@ class SlidingPuzzleView:
     self.board_height = board_size[1];
 
     # creating 2D array (board). board contains rectangle objects
-    # that cover each cell of our game board. for instance, board[0][1] 
+    # that cover each cell of our game board. for instance, board[0][1]
     # contains a rectangle object with the position of our game cell at
     # row 0, col 1, and the width and height of a cell
 
@@ -114,13 +119,13 @@ class SlidingPuzzleView:
         col_pos  = (CELL_MARGIN + self.cell_width)  * col + CELL_MARGIN;
         row_pos  = (CELL_MARGIN + self.cell_height) * row + CELL_MARGIN;
 
-        rect     = pygame.Rect(col_pos, row_pos, 
-                               self.cell_width, self.cell_height); 
+        rect     = pygame.Rect(col_pos, row_pos,
+                               self.cell_width, self.cell_height);
 
         self.screen.fill(BOARD_COLOR, rect);
-        
+
         self.board[row].append(rect);
-        
+
     pygame.display.flip();
 
 
@@ -130,7 +135,7 @@ class SlidingPuzzleView:
       Function: updateBoard
       ---------------------
 
-      Draws the board based on the new board state. 
+      Draws the board based on the new board state.
 
 
       board_state: a 2D array containing the state of the board
@@ -146,15 +151,15 @@ class SlidingPuzzleView:
       for col in range(self.num_cols):
         self.screen.fill(BOARD_COLOR, self.board[row][col]);
 
-        if board_state[row][col] > 0: 
+        if board_state[row][col] > 0:
           string          = str(board_state[row][col]);
-          text            = font.render(string, True, TEXT_COLOR);  
+          text            = font.render(string, True, TEXT_COLOR);
 
           textpos         = text.get_rect();
-          textpos.centerx = self.board[row][col].centerx;  
+          textpos.centerx = self.board[row][col].centerx;
           textpos.centery = self.board[row][col].centery;
-          
-          self.screen.blit(text, textpos); 
+
+          self.screen.blit(text, textpos);
 
 
     pygame.display.flip();
@@ -170,16 +175,16 @@ class SlidingPuzzleView:
       cartesian coordinates [x_pos, y_pos]. Returns [-1, -1] if
       coordinates are not within the bounds of the board.
 
-      
+
       x_pos: x coordinates of user click.
       y_pos: y coordinates of user click.
-      
+
 
       returns: row and column indices on success, and [-1, -1] on
-               failure. 
+               failure.
 
     """
-    row = (x_pos - CELL_MARGIN) / (CELL_MARGIN + self.cell_height);  
+    row = (x_pos - CELL_MARGIN) / (CELL_MARGIN + self.cell_height);
     col = (y_pos - CELL_MARGIN) / (CELL_MARGIN + self.cell_width);
 
     if row > self.num_rows or col > self.num_cols:
@@ -188,8 +193,21 @@ class SlidingPuzzleView:
     else:
       index = [int(row), int(col)];
 
-    return index; 
+    return index;
 
+
+  def victory(self):
+    """
+
+      Function: victory
+      ---------------------
+
+      Notifies the user they have won the game!
+
+      returns: nothing
+
+    """
+    print "yay you won the game!"
 
 
 

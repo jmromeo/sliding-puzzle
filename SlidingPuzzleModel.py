@@ -1,10 +1,10 @@
 """ importing required libraries """
-from random import sample # function to create pseudo random list 
+from random import sample # function to create pseudo random list
 
 DEBUG = False;
 
 class SlidingPuzzleModel:
-  """ 
+  """
 
     Handles move requests and random board generation.
 
@@ -13,29 +13,29 @@ class SlidingPuzzleModel:
     Sliding Puzzle Game. The Model is in charge of figuring out whether
     a move requested by the user is a valid move, and if it is a valid
     move, to update the Sliding Puzzle board array with our move.
-   
+
 
     Attributes:
       board_state: a 2 dimensional array holding the state of the board.
       neighbors:   a 2 dimensional array of lists that hold the [row, col]
-                   coordinates of each of the neighboring cells 
-                   
+                   coordinates of each of the neighboring cells
+
 
   """
 
 
   def __init__(self, size):
-    """ 
+    """
 
       Function: __init__
       ------------------
-      
-      Initializes board state array and randomly generates a sliding 
-      puzzle Problem. Also sets up neighbors array that keeps track of
-      who each cell of the boards neighboring cells are. 
-     
 
-      size: array with the following format: [# of rows, # of columns]. 
+      Initializes board state array and randomly generates a sliding
+      puzzle Problem. Also sets up neighbors array that keeps track of
+      who each cell of the boards neighboring cells are.
+
+
+      size: array with the following format: [# of rows, # of columns].
 
 
       returns: nothing
@@ -43,31 +43,60 @@ class SlidingPuzzleModel:
     """
     # create an empty 2D array to hold the board_state
 
-    num_rows = size[0];
-    num_cols = size[1];
+    self.num_rows = size[0];
+    self.num_cols = size[1];
 
     self.board_state = [];
 
-    for row in range(num_rows):
+    for row in range(self.num_rows):
       self.board_state.append([]);
-      for column in range(num_cols):
+      for column in range(self.num_cols):
         self.board_state[row].append(0);
 
-    self.generateBoard(num_rows, num_cols);
-    self.__generateNeighbors(num_rows, num_cols);
+    self.generateBoard(self.num_rows, self.num_cols);
+    self.__generateNeighbors(self.num_rows, self.num_cols);
 
-        
+
+  def checkWin(self):
+    """
+
+      Function: checkWin
+      --------------------
+
+      Checks whether the user has won. Returns true if all numbers
+      are in the correct position and false otherwise.
+
+      returns: True if all numbers are in correct position, false
+               otherwise.
+
+    """
+    checknum = 0;
+
+    for row in range(self.num_rows):
+      for col in range(self.num_cols):
+
+        # if we've reached the last item then we know that we've won, so break!
+        if ((row == (self.num_rows-1)) and (col == (self.num_cols-1))):
+            break;
+
+        checknum = (row * (self.num_cols)) + col + 1;
+        if (checknum != self.board_state[row][col]):
+            return False;
+
+    return True;
+
+
   def moveNumber(self, position):
     """
 
       Function: moveNumber
       --------------------
 
-      Checks whether the requested number can move and updates the 
+      Checks whether the requested number can move and updates the
       board state appropriately.
 
 
-      position: an array containing the position of the number 
+      position: an array containing the position of the number
                 requested to move with the following format, [row, col].
 
 
@@ -83,11 +112,11 @@ class SlidingPuzzleModel:
       xpos         = neighbor_pos[0];
       ypos         = neighbor_pos[1];
       neighbor_num = self.board_state[xpos][ypos];
-      
+
       if neighbor_num == 0:
         my_num = self.board_state[row][col];
 
-        self.board_state[row][col]   = 0; 
+        self.board_state[row][col]   = 0;
         self.board_state[xpos][ypos] = my_num;
         break;
 
@@ -118,28 +147,28 @@ class SlidingPuzzleModel:
 
       size: array with the following format [# of rows, # of columns].
 
-      
-      returns: nothing 
+
+      returns: nothing
 
     """
-    # Generating a list of unique random numbers from 1->size 
+    # Generating a list of unique random numbers from 1->size
 
-    num_blocks = num_rows * num_cols; 
-    randlist   = sample(range(num_blocks), num_blocks); 
+    num_blocks = num_rows * num_cols;
+    randlist   = sample(range(num_blocks), num_blocks);
 
 
-    # organizing list in a 2D array that matches the layout of the board 
-    # algorithm for index is row = index / (num_rows), and 
+    # organizing list in a 2D array that matches the layout of the board
+    # algorithm for index is row = index / (num_rows), and
     # col = index % (num_cols).  This will map the 1 dimensional list
     # to the 2D array in order from left to right, top to bottom
 
-    for index in range(num_blocks):
+    for index in range(num_blocks-1):
       row                        = index / (num_rows);
       col                        = index % (num_cols);
       self.board_state[row][col] = randlist[index];
-    
+
     if DEBUG == True:
-      print self.board_state;  
+      print self.board_state;
 
 
   def __generateNeighbors(self, num_rows, num_cols):
@@ -153,10 +182,10 @@ class SlidingPuzzleModel:
 
 
       num_rows: number of rows on the board
-      num_cols: number of columns on the board 
+      num_cols: number of columns on the board
 
-      
-      returns: nothing 
+
+      returns: nothing
 
     """
     self.neighbors = [];
@@ -165,7 +194,7 @@ class SlidingPuzzleModel:
       self.neighbors.append([]);
       for col in range(num_cols):
         neighbors = [];
-        
+
         if (row - 1) >= 0:
           neighbors.append([row - 1, col]);
 
@@ -179,7 +208,7 @@ class SlidingPuzzleModel:
           neighbors.append([row, col + 1]);
 
         self.neighbors[row].append(neighbors);
-    
+
     if DEBUG == True:
       for row in range(num_rows):
         for col in range(num_cols):

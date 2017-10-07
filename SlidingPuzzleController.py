@@ -10,13 +10,13 @@ class SlidingPuzzleController:
     Interface between the Model and View.
 
 
-    SlidingPuzzleController is the Controller part of the MVC pattern 
-    for our Sliding Puzzle Game. The Controller is in charge of 
-    monitoring user input, asking the Model to update the board state 
+    SlidingPuzzleController is the Controller part of the MVC pattern
+    for our Sliding Puzzle Game. The Controller is in charge of
+    monitoring user input, asking the Model to update the board state
     when the user requests a move, and asking the View to display the
     change of board state to the user.
 
-    
+
     Attributes:
       None
 
@@ -30,7 +30,7 @@ class SlidingPuzzleController:
 
       Asks Model to create a random board state, then asks View to display
       that board state to the user. Also begins listening for user input,
-      such as quitting out of pygame or move requests from user. 
+      such as quitting out of pygame or move requests from user.
 
 
       view:  instance of SlidingPuzzleView
@@ -75,22 +75,38 @@ class SlidingPuzzleController:
     done = False;
 
     while done == False:
+
       for event in pygame.event.get():
+
+        # kill game if x button is clicked on window
         if event.type == pygame.QUIT:
           done = True;
 
+        # kill game if escape key is pressed
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                done = True;
+
+        # if mouse button was pressed, decide whether a move is valid.
+        # if there is a valid move, make the move and check if the move
+        # results in a win. If it does result in a win, notify the user.
         elif event.type == pygame.MOUSEBUTTONDOWN:
           pos    = pygame.mouse.get_pos();
           col_pos = pos[0];
           row_pos = pos[1];
 
           index = view.getIndices(row_pos, col_pos);
-          
-          if index[0] != -1: 
+
+          if index[0] != -1:
             model.moveNumber(index);
             board_state = model.getBoardState();
 
             view.updateBoard(board_state);
+
+            if (model.checkWin()):
+                view.victory();
+                done = True;
+
 
     pygame.quit();
 
